@@ -10,7 +10,7 @@ def index(response, id):
         print(response.POST)
         if response.POST.get('save'):
             for item in ls.item_set.all():
-                if response.POST.get('c'+str(item.id)) == 'clicked':
+                if response.POST.get('c' + str(item.id)) == 'clicked':
                     item.complete = True
                 else: 
                     item.complete = False
