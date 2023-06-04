@@ -23,5 +23,3 @@ urlpatterns = [
     # include urls.py trong folder main
     path('', include('main.urls')),
 ]
-
-

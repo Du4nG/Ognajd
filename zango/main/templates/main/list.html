@@ -1,14 +1,25 @@
-{% extends 'main/base.html' %} {% block title %} View {% endblock %} 
+{% extends 'main/base.html' %} 
+{% block title %} View {% endblock %} 
 
 {% block content %}
 <h1>{{ls.name}}</h1>
-<ul>
-  {% for item in ls.item_set.all %}
-    {% if item.complete == True %}
-        <li>{{item.text}} - Completed</li>
+<form method="POST" action="#">
+  {% csrf_token %}
+  <ul>
+    {% for item in ls.item_set.all %} {% if item.complete == True %}
+    <li>
+      <input type="checkbox" , value="clicked" , name="c{{item.id}}" checked />
+      {{item.text}} - Xong
+    </li>
     {% else %}
-        <li>{{item.text}} - Incompleted </li>
-    {% endif %}
-  {% endfor %}
-</ul>
+    <li>
+      <input type="checkbox" , value="clicked" , name="c{{item.id}}" />
+      {{item.text}} - Chưa xong
+    </li>
+    {% endif %} {% endfor %}
+  </ul>
+  <button type="submit" , name="save" , value="save">Lưu</button>
+  <input type="text" name="new" />
+  <button type="submit" , name="newItem" , value="new">Thêm mới</button>
+</form>
 {% endblock %}
