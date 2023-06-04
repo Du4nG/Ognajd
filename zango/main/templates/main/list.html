@@ -3,18 +3,27 @@
 <h1>{{ls.name}}</h1>
 <form method="POST" action="#">
   {% csrf_token %}
-  <ul>
     {% for item in ls.item_set.all %}
+    <div class='input-group mb-3'>
+      <div class='input-group-prepend'>
+        <div class='input-group-text'>
       {% if item.complete == True %}
-        <li><input type="checkbox" , value="clicked" , name="c{{item.id}}" checked>{{item.text}} - Xong</li>
+        <input type="checkbox" , value="clicked" , name="c{{item.id}}" checked>
       {% else %}
-        <li><input type="checkbox" , value="clicked" , name="c{{item.id}}">{{item.text}}</li>
+        <input type="checkbox" , value="clicked" , name="c{{item.id}}">
       {% endif %}
+      </div>
+      </div>
+      <input type='text', value='{{item.text}}', class='form-control'>
+    </div>
     {% endfor %}
-  </ul>
   
-  <button type="submit" , name="save" , value="save">Lưu</button>
-  <input type="text" name="new" />
-  <button type="submit" , name="newItem" , value="new">Thêm mới</button>
+    <div class='input-group mb-3'> 
+      <div class=input-group-prepend>
+        <button type="submit" , name="save" , value="save">Lưu</button>
+      </div>
+      <input type="text" name="new" />
+    </div>
+  <button type="submit" , name="newItem", class='btn btn-success' , value="new">Thêm mới</button>
 </form>
 {% endblock %}
