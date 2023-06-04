@@ -23,6 +23,8 @@ urlpatterns = [
     
     # include urls.py trong folder main
     path('', include('main.urls')),
+    path('', include('main.urls')),
+    path('', include('django.contrib.auth.urls')),
     
     path('register/', v.register, name='register'),
     

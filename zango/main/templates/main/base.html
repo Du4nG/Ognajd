@@ -1,6 +1,6 @@
 <html>
   <head>
-    <style type='text/class'>
+    <style type='text/css'>
       .sidenav {
         height:100%;
         width:160px;
@@ -8,7 +8,7 @@
         z-index:1;
         top:0;
         left:0;
-        background-color:#111;
+        background-color:#650081;
         overflow-x:hidden;
         padding-stop:20px;
       }
@@ -16,13 +16,13 @@
       .sidenav a {
         padding:6px 8px 6px 16px;
         text-decoration:none;
-        color: #696969;
+        color: #ffc901;
         font-size:25px;
         display:block;
       }
 
       .sidenav a:hover {
-        color:#f1f1f1;
+        color:#77DD77;
       }
 
       .main {
@@ -36,21 +36,30 @@
 
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+      <title>{% block title %}Trang chủ{% endblock %}</title>
 
     <title>Dũng</title>
   </head>
   <body>
     <div class='sidenav'>
-      <a href='/home'>Nhà</a>
+      <a href='/login'>Nhà</a>
       <a href='/create'>Tạo mới</a>
-
+      <a href='/2'>Xem</a>
+    </div>
+    
       <div id="content" , name="content", class='main'>
         <div class='row justify-contgent-center'>
           <div class='col-8'>
-            <h1 class='mt-2'>Siteee</h1>
-            <h1 class=mt-0 mb-4></h1>
-            {% block content %} 
-            {% endblock %}</div>
+
+            <hr class= 'mt-0 mb-4'></h1>
+              {% if user.is_authenticated %}
+                {% block content %} 
+                {% endblock %}
+              {% else %}
+                <a href='/login'>Đăng nhập</a>
+              {% endif %}
+            
+          </div>
         </div>
       </div>
 
