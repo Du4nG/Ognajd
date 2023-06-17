@@ -1,7 +1,6 @@
 {% extends 'app/base.html' %}
 {% load static %}
 
-
 {% block banner-slider %}
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -44,43 +43,20 @@
 {% endblock  %}
 
 {% block main-content %}
-<div>
+<div class='row' style='width:100%'>
 
-    <div class='col-lg-3'>
-        <img class='thumbnail' src="{% static 'app/images/cow-ghee.png' %}">
-        <div class='box-element product'>
-            <h3>Sản phẩm 1</h3>
-            <hr>
-            <button class='btn btn-outline-secondary add-btn'>Thêm vào giỏ hàng</button>
-            <a class='btn btn-outline-success btn-sm' href='#'>Xem</a>
-            <h4 style='display:inline-block; float:right;'><strong>69.000đ</strong></h4>
-
-        </div>
-    </div>    
-
-    <div class='col-lg-3'>
-        <img class='thumbnail' src="{% static 'app/images/cow-ghee.png' %}">
-        <div class='box-element product'>
-            <h3>Sản phẩm 2</h3>
-            <hr>
-            <button class='btn btn-outline-secondary add-btn'>Thêm vào giỏ hàng</button>
-            <a class='btn btn-outline-success btn-sm' href='#'>Xem</a>
-            <h4 style='display:inline-block; float:right;'><strong>6.000đ</strong></h4>
-
-        </div>
-    </div>    
-    
-    <div class='col-lg-3'>
-        <img class='thumbnail' src="{% static 'app/images/cow-ghee.png' %}">
-        <div class='box-element product'>
-            <h3>Sản phẩm 3</h3>
-            <hr>
-            <button class='btn btn-outline-secondary add-btn'>Thêm vào giỏ hàng</button>
-            <a class='btn btn-outline-success btn-sm' href='#'>Xem</a>
-            <h4 style='display:inline-block; float:right;'><strong>9.000đ</strong></h4>
-
-        </div>
-    </div>
+    {% for product in products %}
+        <div class='col-lg-4'>
+            <img class='thumbnail' src="{{ product.ImageURL }}">
+            <div class='box-element product'>
+                <h3>{{ product.name }}</h3>
+                <hr>
+                <button data-product={{product.id}} data-action='add' class='btn btn-outline-secondary add-btn update-cart'>Thêm vào giỏ hàng</button>
+                <a class='btn btn-outline-success btn-sm' href='#'>Xem</a>
+                <h4 style='display:inline-block; float:right;'><strong>${{product.price}}</strong></h4>
+            </div>
+        </div>    
+    {% endfor %}
 
 </div>
 </br>
