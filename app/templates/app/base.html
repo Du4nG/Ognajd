@@ -27,7 +27,7 @@
         <script src="{% static 'app/js/myscript.js' %}"></script>
 
         <script type="text/javascript">
-          var user = '{{request.user}}'
+          var user = '{{user.username}}'
           // xử lý csrf
           function getCookie(name) {
             let cookieValue = null;
@@ -60,16 +60,15 @@
               <a class="navbar-brand" href="#">
                 <img src="{% static 'app/images/Neel.png' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
               </a>
+
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
+
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href={% url 'home' %}>Trang chủ</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
                   </li>
 
                   <!--dropdown-->
@@ -84,35 +83,41 @@
                       <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                   </li>
-
+            
                   <li class="nav-item">
                     <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
+                <form class="d-flex" role='search' method='POST' action={%url 'search'%}>
+                  {% csrf_token %}
+                  <input class="form-control me-2" type="search" placeholder="Zoom65" aria-label="Search" name='searched'>
+                  <button class="btn btn-outline-success" type="submit"> 🔍 </button>
                 </form>
               </div>
               
               <!--Thêm nav-->
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!--user-->
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      User
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item " href={% url 'cart' %}>Giỏ hàng</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-                    </ul>
-                  </li>
+                <!--dropdown-->
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{request.user}}
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Something</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href={%url 'logout'%}>Đăng xuất</a></li>
+                  </ul>
+                </li>
 
-                  <li><a class="nav-link" href="#">Đăng nhập</a></li>
-                  <li><a class="nav-link" href="#">Thông tin cá nhân</a></li>
-
+                <li class='nav-item'><a class="nav-link" href={%url 'login'%}>Đăng nhập</a></li>
+                <li class='nav-item'><a class="nav-link" href={%url 'register'%}>Đăng ký</a></li>
               </ul>
+
+              <div class='form-inline my-2 my-lg-0'>
+                <a href={%url 'cart'%}><img id='cart-icon' src={% static 'images/cart.png' %}></a>
+                <p id='cart-total'>{{cartItems}}</p>
+              </div>
+                  
             </div>
         </nav>
 
@@ -120,6 +125,8 @@
         {% block main-content %}{% endblock %}
         {% block cart-content %}{% endblock %}
         {% block content-checkout %}{% endblock %}
+        {% block register %}{% endblock %}
+
     </body>
 
 
