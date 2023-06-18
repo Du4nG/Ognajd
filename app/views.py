@@ -42,14 +42,28 @@ def home(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = 'hidden'
+        user_login = 'show'
     else: 
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0}
         cartItems = order['get_cart_items']
+        user_not_login = 'show'
+        user_login = 'hidden'
         
+    categories = Category.objects.filter(is_sub=False)
     products = Product.objects.all()
-    context = {'products':products, 'cartItems':cartItems}
-    return render(request, 'app/home.html', context)
+    context = {'products':products, 'cartItems':cartItems, 'categories':categories, 'user_not_login':user_not_login, 'user_login':user_login}
+    return render(request, 'app/home.html', context=context)
+
+def category(request):
+    categories = Category.objects.filter(is_sub=False)
+    active_category = request.GET.get('category','')
+    if active_category:
+        products = Product.objects.filter(category__slug=active_category)
+    context = {'categories':categories, 'products':products, 'active_category':active_category}
+    return render(request, 'app/category.html', context=context)
+    
 
 def search(request):
     if request.method == 'POST':
@@ -60,13 +74,16 @@ def search(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = 'show'
+        user_login = 'hidden'
     else: 
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0}
         cartItems = order['get_cart_items']
-        
+        user_not_login = 'show'
+        user_login = 'hidden'
     products = Product.objects.all()
-    context = {'searched':searched, 'keys':keys, 'products':products, 'cartItems':cartItems}
+    context = {'searched':searched, 'keys':keys, 'products':products, 'cartItems':cartItems, 'user_not_login':user_not_login, 'user_login':user_login}
     return render(request, 'app/search.html', context=context)
 
 def cart(request):
@@ -75,12 +92,16 @@ def cart(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = 'show'
+        user_login = 'hidden'
     else: 
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0}
         cartItems = order['get_cart_items']
-    context = {'items':items, 'order':order}
-    return render(request, 'app/cart.html', context)
+        user_not_login = 'show'
+        user_login = 'hidden'
+    context = {'items':items, 'order':order, 'cartItems':cartItems, 'user_not_login':user_not_login, 'user_login':user_login}
+    return render(request, 'app/cart.html', context=context)
 
 def checkout(request):
     if request.user.is_authenticated:
@@ -88,12 +109,16 @@ def checkout(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = 'show'
+        user_login = 'hidden'
     else: 
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0}
         cartItems = order['get_cart_items']
-    context = {'items':items, 'order':order}
-    return render(request, 'app/checkout.html', context)
+        user_not_login = 'show'
+        user_login = 'hidden'
+    context = {'items':items, 'order':order, 'cartItems':cartItems, 'user_not_login':user_not_login, 'user_login':user_login}
+    return render(request, 'app/checkout.html', context=context)
 
 def udpateItem(request):
     data = json.loads(request.body)

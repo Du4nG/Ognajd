@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+
+<body>
+    {% block register %}
+      <div class='row' style='width:100%'>
+        {% for product in products %}
+            <div class='col-lg-4'>
+                <img class='thumbnail' src="{{ product.ImageURL }}">
+                <div class='box-element product'>
+                    <h3>{{ product.name }}</h3>
+                    <hr>
+                    <button data-product={{product.id}} data-action='add' class='btn btn-outline-secondary add-btn update-cart'>Thêm vào giỏ hàng</button>
+                    <a class='btn btn-outline-success btn-sm' href='#'>Xem</a>
+                    <h4 style='display:inline-block; float:right;'><strong>${{product.price}}</strong></h4>
+                </div>
+            </div>    
+        {% endfor %}
+      </div>
+    {% endblock %}
+</body>
